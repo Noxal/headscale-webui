@@ -1,0 +1,28 @@
+name: "Build"
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    name: "Build and Push"
+    runs-on: self-hosted
+    steps:
+      - uses: actions/checkout@v3
+      - uses: docker/build-push-action@v3
+        with:
+          context: .
+          push: true
+          tags: ghcr.io/noxal/headscale-webui:latest
+  delete_old_packages:
+    name: "Delete old Packages"
+    runs-on: self-hosted
+    steps:
+      - uses: actions/delete-package-versions@v4
+        with:
+          package-name: 'headscale-webui'
+          package-type: 'container'
+          min-versions-to-keep: 5
+          delete-only-untagged-versions: true
