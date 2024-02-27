@@ -402,12 +402,7 @@ def thread_machine_content(machine, machine_content, idx, all_routes, failover_p
     last_seen_delta   = local_time - last_seen_local
     last_seen_print   = helper.pretty_print_duration(last_seen_delta)
     last_seen_time    = str(last_seen_local.strftime('%A %m/%d/%Y, %H:%M:%S'))+" "+str(timezone)+" ("+str(last_seen_print)+")"
-    
-    last_update_parse = local_time if machine["lastSuccessfulUpdate"] is None else parser.parse(machine["lastSuccessfulUpdate"])
-    last_update_local = last_update_parse.astimezone(timezone)
-    last_update_delta = local_time - last_update_local
-    last_update_print = helper.pretty_print_duration(last_update_delta)
-    last_update_time  = str(last_update_local.strftime('%A %m/%d/%Y, %H:%M:%S'))+" "+str(timezone)+" ("+str(last_update_print)+")"
+
 
     created_parse     = parser.parse(machine["createdAt"])
     created_local     = created_parse.astimezone(timezone)
@@ -461,14 +456,12 @@ def thread_machine_content(machine, machine_content, idx, all_routes, failover_p
         ns_id             = machine["user"]["id"],
         ns_created        = machine["user"]["createdAt"],
         last_seen         = str(last_seen_print),
-        last_update       = str(last_update_print),
         machine_ips       = Markup(machine_ips),
         advertised_routes = Markup(routes),
         exit_node_badge   = Markup(exit_node_badge),
         ha_route_badge    = Markup(ha_route_badge),
         status_badge      = Markup(status_badge),
         user_badge        = Markup(user_badge),
-        last_update_time  = str(last_update_time),
         last_seen_time    = str(last_seen_time),
         created_time      = str(created_time),
         expiry_time       = str(expiry_time),
